@@ -1,0 +1,232 @@
+%% abtex2-modelo-artigo.tex, v-1.9.5 laurocesar
+%% Copyright 2012-2015 by abnTeX2 group at http://www.abntex.net.br/ 
+%%
+%% This work may be distributed and/or modified under the
+%% conditions of the LaTeX Project Public License, either version 1.3
+%% of this license or (at your option) any later version.
+%% The latest version of this license is in
+%%   http://www.latex-project.org/lppl.txt
+%% and version 1.3 or later is part of all distributions of LaTeX
+%% version 2005/12/01 or later.
+%%
+%% This work has the LPPL maintenance status `maintained'.
+%% 
+%% The Current Maintainer of this work is the abnTeX2 team, led
+%% by Lauro César Araujo. Further information are available on 
+%% http://www.abntex.net.br/
+%%
+%% This work consists of the files abntex2-modelo-artigo.tex and
+%% abntex2-modelo-references.bib
+%%
+
+% ------------------------------------------------------------------------
+% ------------------------------------------------------------------------
+% abnTeX2: Modelo de Artigo Acadêmico em conformidade com
+% ABNT NBR 6022:2003: Informação e documentação - Artigo em publicação 
+% periódica científica impressa - Apresentação
+% ------------------------------------------------------------------------
+% ------------------------------------------------------------------------
+
+\documentclass[
+	% -- opções da classe memoir --
+	article,			% indica que é um artigo acadêmico
+	11pt,				% tamanho da fonte
+	oneside,			% para impressão apenas no verso. Oposto a twoside
+	a4paper,			% tamanho do papel. 
+	% -- opções da classe abntex2 --
+	%chapter=TITLE,		% títulos de capítulos convertidos em letras maiúsculas
+	%section=TITLE,		% títulos de seções convertidos em letras maiúsculas
+	%subsection=TITLE,	% títulos de subseções convertidos em letras maiúsculas
+	%subsubsection=TITLE % títulos de subsubseções convertidos em letras maiúsculas
+	% -- opções do pacote babel --
+	english,			% idioma adicional para hifenização
+	brazil,				% o último idioma é o principal do documento
+	sumario=tradicional,
+	fleqn				%Equações no lado esquerdo
+	]{abntex2}
+
+
+% ---
+% PACOTES
+% ---
+
+% ---
+% Pacotes fundamentais 
+% ---
+\usepackage{lmodern}			% Usa a fonte Latin Modern
+\usepackage[T1]{fontenc}		% Selecao de codigos de fonte.
+\usepackage[utf8]{inputenc}		% Codificacao do documento (conversão automática dos acentos)
+\usepackage{indentfirst}		% Indenta o primeiro parágrafo de cada seção.
+\usepackage{nomencl} 			% Lista de simbolos
+\usepackage{color}				% Controle das cores
+\usepackage{graphicx}			% Inclusão de gráficos
+\usepackage{microtype} 			% para melhorias de justificação
+% ---
+		
+% ---
+% Pacotes de citações
+% ---
+\usepackage[alf]{abntex2cite}	% Citações padrão ABNT
+% ---
+
+\usepackage{amsmath}
+
+\newcommand{\coment}{\textbackslash\textbackslash}
+
+% ---
+% Informações de dados para CAPA e FOLHA DE ROSTO
+% ---
+\titulo{Trabalho KNN \\ Relatório}
+\autor{Leandro Duarte Pulgatti}
+\local{Brasil}
+\data{\the\year}
+% ---
+
+% ---
+% Configurações de aparência do PDF final
+
+% alterando o aspecto da cor azul
+\definecolor{blue}{RGB}{41,5,195}
+
+% informações do PDF
+\makeatletter
+\hypersetup{
+     	%pagebackref=true,
+		pdftitle={\@title}, 
+		pdfauthor={\@author},
+    	pdfsubject={Modelo de artigo científico com abnTeX2},
+	    pdfcreator={LaTeX with abnTeX2},
+		pdfkeywords={abnt}{latex}{abntex}{abntex2}{atigo científico}, 
+		colorlinks=true,       		% false: boxed links; true: colored links
+    	linkcolor=blue,          	% color of internal links
+    	citecolor=blue,        		% color of links to bibliography
+    	filecolor=magenta,      		% color of file links
+		urlcolor=blue,
+		bookmarksdepth=4
+}
+\makeatother
+% --- 
+
+% ---
+% compila o indice
+% ---
+\makeindex
+% ---
+
+% ---
+% Altera as margens padrões
+% ---
+\setlrmarginsandblock{3cm}{3cm}{*}
+\setulmarginsandblock{3cm}{3cm}{*}
+\checkandfixthelayout
+% ---
+
+% --- 
+% Espaçamentos entre linhas e parágrafos 
+% --- 
+
+\setlength\parindent{0pt} %sem identação para a primeira linha do parágrafo
+
+% Controle do espaçamento entre um parágrafo e outro:
+\setlength{\parskip}{0.2cm}  % tente também \onelineskip
+
+% Espaçamento simples
+\SingleSpacing
+
+% ----
+% Início do documento
+% ----
+\begin{document}
+
+% Seleciona o idioma do documento (conforme pacotes do babel)
+%\selectlanguage{english}
+\selectlanguage{brazil}
+
+% Retira espaço extra obsoleto entre as frases.
+\frenchspacing 
+
+\maketitle
+
+
+% ---
+
+% ----------------------------------------------------------
+% ELEMENTOS TEXTUAIS
+% ----------------------------------------------------------
+\textual
+
+\section{Descrição}
+
+Relatório de experimento apresentado na disciplina de Aprendizado de Máquina - INFO7004.
+
+
+Este documento tem por finalidade descrever as ações realizadas para realizar o trabalho proposto e listar as dificuldades encontradas bem como as soluções aplicadas.
+
+
+A primeira parte foi a extração de características dos textos da base IMDB.
+
+A base original possuía 100.000 registros, sendo:
+
+\begin{itemize}
+	\item 25.000 rotulados como "neg"
+	\item 25.000 rotulados como "pos"
+	\item 50.000 sem rótulo "unsup'
+\end{itemize}
+
+Os 50.000 registros não rotulados foram descartados.
+Devido a maneira como o programa KNN foi implementado foi necessário alterar os label's para valores numéricos.
+Assim os dados rotulados como "neg" foram alterados para 0 (zero) e os rotulaos como "pos"  para 1 (um).
+
+Para este fim foi criado um programa na linguagem python utilizando-se da biblioteca gensim[1] que implementa o modelo Word2vec.
+
+Esta biblioteca cria um vetor de vetores, onde cada vetor interno representa uma palavra contida no texto.
+Foi realizada a soma dos vetores para se chegar a um vetor que representasse as frases como um todo.
+
+Foram utilizadas duas diferentes configurações para a função que gera os vetores na tentativa de se conseguir um vetor de características mais representativo.
+
+\begin{itemize}
+	\item size=100, window=5, min\_count=1  -- indica um vetor com 100 características e uma janela de 5 palavras
+
+    \item size=150, window=10, min\_count=2  -- indica um vetor com 150 características e uma janela de 10 palavras, apenas das palavras que aparecem pelo menos duas vezes no texto \footnote{Devido a erros com a configuração min\_count=2, pois algumas linhas não continham pelo menos uma palavra repetida duas vezes, foram retiradas 3400 linhas que possuíam tamanho de frase inferior a 400 caracteres}
+\end{itemize}
+
+Os dados foram então misturados (shuffle) pois os mesmos se apresentavam sequenciais em relação ao label, apesar dos classificadores baseados em distância não sofrem com problemas este passo facilitou a separação das bases.
+
+Os arquivos com as características geradas foram então separados em duas bases de igual tamanho para trenamento e testes.
+
+Foi adaptado um programa criado em C++ para a disciplina CI762 cursada no segundo semestre de 2014.
+
+\section{Resultados}
+
+A execução do programa contra as bases revelou acertos próximos a 50\% ( 53,54\% no melhor caso ).
+Mesmo a alteração do valor de K {1,3,5,10} não resultou em melhoras na taxa de predição.
+Como os resultados foram muito próximos ao esperado de um sorteio, foi realizada uma validação com os mesmos dados na ferramenta Weka[2] sendo obtidos valores muito próximos a 50\%.
+
+
+\section{Considerações}
+
+Devido a baixíssima taxa de acerto verificou-se que as características extraídas claramente não são suficientemente discriminantes.
+Assim a implementação de outros cálculos de distância (Manhatan e Distância Cosseno) acabou não sendo testada.
+
+Algumas ações podem ser realizadas para uma melhor taxa de acerto.
+
+\begin{itemize}
+	\item Limpeza dos dados ( separation words, case ) 
+	\item normalização dos vetores gerados \footnote{ Utilizar a distância de Mahalanobis dispensa este passo pois a mesma é invariante escala das medições.}
+	\item Utilizar outros tamanhos de vetores, pois vetotres com 100 e 150 posições apresentaram pouca variação do resultado.
+	\item Utilizar janelas maiores.
+\end{itemize}
+
+
+\postextual
+
+% ----------------------------------------------------------
+% Referências bibliográficas
+% ----------------------------------------------------------
+\bibliography{referencias}
+
+[1] https://radimrehurek.com/gensim/models/word2vec.html
+
+[2] https://www.cs.waikato.ac.nz/ml/weka/
+
+\end{document}
